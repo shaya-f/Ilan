@@ -1,0 +1,19 @@
+const express = require("express");
+const cors = require("cors");
+const mongoose = require("mongoose");
+require("dotenv").config();
+
+const app = express();
+const PORT = 4000;
+
+mongoose
+  .connect(
+    `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.68oko.mongodb.net/${process.env.DB_NAME}`
+  )
+  .then(() => {
+    console.log(`connected to mongoDB`);
+    app.listen(PORT, () => {
+      console.log(`App running on port ${PORT}`);
+    });
+  })
+  .catch(() => console.error("mongoDB connection error"));
