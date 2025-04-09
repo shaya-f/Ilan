@@ -6,6 +6,7 @@ import LoginPage from "../pages/Login/LoginPage";
 import Register from "../pages/Register/Register";
 import NotFoundPage from "../pages/NotFoundPage";
 import AuthProvider from "../context/AuthProvider";
+import PrivateRoute from "../components/routing/PrivateRoute";
 
 export default function App() {
   return (
@@ -16,7 +17,14 @@ export default function App() {
           <main className="flex-grow">
             <Routes>
               <Route path="/" element={<HomePage />} />
-              <Route path="/profile" element={<ProfilePage />} />
+              <Route
+                path="/profile"
+                element={
+                  <PrivateRoute>
+                    <ProfilePage />
+                  </PrivateRoute>
+                }
+              />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<Register />} />
               <Route path="*" element={<NotFoundPage />} />

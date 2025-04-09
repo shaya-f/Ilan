@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
 import { RxHamburgerMenu } from "react-icons/rx";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import AuthContext from "../../context/AuthContext";
 
 export default function Navbar() {
+  const { isAuthenticated, currentUser } = useContext(AuthContext);
   const [menuOpen, setMenuOpen] = useState(false);
 
   function toggleMenu() {
@@ -26,24 +28,33 @@ export default function Navbar() {
             >
               Home
             </Link>
-            <Link
-              to="/profile"
-              className="px-3 py-2 rounded-md text-sm font-bold text-gray-500 hover:text-blue-700 "
-            >
-              Profile
-            </Link>
-            <Link
-              to="/login"
-              className="px-3 py-2 rounded-md text-sm font-bold text-gray-500 hover:text-blue-700 "
-            >
-              Login
-            </Link>
-            <Link
-              to="/register"
-              className="px-3 py-2 rounded-md text-sm font-bold text-gray-500 hover:text-blue-700 "
-            >
-              Register
-            </Link>
+
+            {isAuthenticated ? (
+              <>
+                <Link
+                  to="/profile"
+                  className="px-3 py-2 rounded-md text-sm font-bold text-gray-500 hover:text-blue-700 "
+                >
+                  Profile
+                </Link>
+                <span>Hello, {currentUser.name}</span>
+              </>
+            ) : (
+              <>
+                <Link
+                  to="/login"
+                  className="px-3 py-2 rounded-md text-sm font-bold text-gray-500 hover:text-blue-700 "
+                >
+                  Login
+                </Link>
+                <Link
+                  to="/register"
+                  className="px-3 py-2 rounded-md text-sm font-bold text-gray-500 hover:text-blue-700 "
+                >
+                  Register
+                </Link>
+              </>
+            )}
           </div>
 
           {/* mobile button */}
@@ -68,24 +79,32 @@ export default function Navbar() {
             >
               Home
             </Link>
-            <Link
-              to="/profile"
-              className="block px-3 py-2 rounded-md text-base font-medium active:bg-gray-300"
-            >
-              Profile
-            </Link>
-            <Link
-              to="/login"
-              className="block px-3 py-2 rounded-md text-base font-medium active:bg-gray-300"
-            >
-              Login
-            </Link>
-            <Link
-              to="/register"
-              className="block px-3 py-2 rounded-md text-base font-medium active:bg-gray-300"
-            >
-              Register
-            </Link>
+            {isAuthenticated ? (
+              <>
+                <Link
+                  to="/profile"
+                  className="block px-3 py-2 rounded-md text-base font-medium active:bg-gray-300"
+                >
+                  Profile
+                </Link>
+                <span>Hello, {currentUser.name}</span>
+              </>
+            ) : (
+              <>
+                <Link
+                  to="/login"
+                  className="block px-3 py-2 rounded-md text-base font-medium active:bg-gray-300"
+                >
+                  Login
+                </Link>
+                <Link
+                  to="/register"
+                  className="block px-3 py-2 rounded-md text-base font-medium active:bg-gray-300"
+                >
+                  Register
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </div>

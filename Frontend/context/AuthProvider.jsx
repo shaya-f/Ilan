@@ -46,6 +46,25 @@ export default function AuthProvider({ children }) {
     }
   }, [setAuthToken, token]);
 
+  const loadUser = useCallback(async () => {
+    if (!token) return;
+
+    setLoading(true);
+    try {
+      setAuthToken(token);
+      const response = await api.get("/auth/me");
+      setCurrentUser(response.data.user);
+      setIsAuthenticated(true);
+    } catch (error) {
+      console.log(error);
+      setCurrentUser(null);
+      setIsAuthenticated(false);
+      setAuthToken(null);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
   async function register(formData) {
     setLoading(true);
     setError(null);
@@ -54,9 +73,9 @@ export default function AuthProvider({ children }) {
       const response = await api.post("/auth/register", formData);
       setToken(response.data.token);
       setAuthToken(response.data.token);
+      await loadUser();
 
       //users
-
       return true;
     } catch (error) {
       console.log(error, "Error registering new user");
@@ -72,9 +91,9 @@ export default function AuthProvider({ children }) {
       const response = await api.post("/auth/login", { email, password });
       setToken(response.data.token);
       setAuthToken(response.data.token);
+      await loadUser();
 
       //users
-
       return true;
     } catch (error) {
       console.log(error, "Error logging in user");

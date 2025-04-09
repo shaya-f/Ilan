@@ -1,6 +1,18 @@
+import { useContext } from "react";
 import { FaUser } from "react-icons/fa";
+import AuthContext from "../context/AuthContext";
 
 export default function ProfilePage() {
+  const { currentUser, logout } = useContext(AuthContext);
+
+  if (!currentUser) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+      </div>
+    );
+  }
+
   // if user has been logged in
   return (
     <div className="container mx-auto px-4 py-8">
@@ -16,12 +28,18 @@ export default function ProfilePage() {
             </div>
             <div className="mt-16">
               <h1 className="text-2xl font-bold text-gray-800">
-                Shaya Freedman
+                {currentUser.name}
               </h1>
-              <p className="text-gray-700">Hertfordshire, England</p>
+              <p className="text-gray-700">
+                {currentUser.city}, {currentUser.country}
+              </p>
 
               <div className="mt-2 flex flex-wrap gap-2">
-                <span>Language: English</span>
+                <span className="bg-blue-100 text-blue-800 text-sm px-2 py-1 rounded-full">
+                  Language:{" "}
+                  {currentUser.languages &&
+                    currentUser.languages.map((lang) => <span>{lang}</span>)}
+                </span>
               </div>
 
               <div className="mt-4">
@@ -32,7 +50,10 @@ export default function ProfilePage() {
               </div>
 
               <div className="mt-6">
-                <button className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md text-sm font-medium cursor-pointer">
+                <button
+                  onClick={logout}
+                  className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md text-sm font-medium cursor-pointer"
+                >
                   Log Out
                 </button>
               </div>

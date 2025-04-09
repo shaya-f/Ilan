@@ -2,7 +2,7 @@ import { useState } from "react";
 import { AiOutlineEye } from "react-icons/ai";
 import { AiOutlineEyeInvisible } from "react-icons/ai";
 
-export default function LoginForm() {
+export default function LoginForm({ onChange, formData }) {
   const [showPassword, setShowPassword] = useState(false);
 
   function toggleShowPassword(event) {
@@ -27,7 +27,9 @@ export default function LoginForm() {
             name="email"
             id="email"
             autoComplete="email"
+            value={formData.email}
             required
+            onChange={onChange}
             placeholder="Enter your e-mail"
             className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none
                     focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
@@ -48,7 +50,9 @@ export default function LoginForm() {
             name="password"
             id="password"
             autoComplete="none"
+            value={formData.password}
             required
+            onChange={onChange}
             placeholder="Enter a password"
             className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none
             focus:ring-blue-500 focus:border-blue-500 sm:text-sm"

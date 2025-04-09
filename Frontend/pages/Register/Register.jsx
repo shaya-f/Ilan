@@ -89,9 +89,10 @@ export default function Register() {
     };
 
     const success = await register(registeredData);
+    console.log(success);
 
     if (success) {
-      navigate("/profile");
+      navigate("/login");
     }
   }
 

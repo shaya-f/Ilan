@@ -183,7 +183,7 @@ export default function RegisterForm({ onChange, formData, countries }) {
         <div className="mt-1 flex">
           <input
             type={showConfirmPassword ? "text" : "password"}
-            name="confirm-password"
+            name="confirmPassword"
             id="confirm-password"
             autoComplete="none"
             value={formData.ConfirmPassword}
